@@ -395,7 +395,7 @@ return this; // chaining, e.g. set.attr({ stroke: '#fff'}).style('dragging').toF
             // you can add your own set of visual states
             'default':
             {
-            	base:       { cursor: 'pointer', opacity: 1, src: 'http://dl.dropbox.com/u/20165443/jsFiddle/images/monitor32.png' },
+            	base:       { cursor: 'pointer', opacity: 1 },
             	dragging:   { cursor: 'pointer', opacity: 0.3 },
             	hover:      { cursor: 'pointer', opacity: 0.7 },
             	mousedown:  { cursor: 'pointer', opacity: 0.6 }
@@ -478,6 +478,7 @@ return this; // chaining, e.g. set.attr({ stroke: '#fff'}).style('dragging').toF
 
     if (!this.dots)
     {
+        console.log("!docs");
         // default animation options. If you don't want animation, pass in null
         this.aniOptions = aniOptions ? aniOptions : {
         	duration:       300,
@@ -488,13 +489,11 @@ return this; // chaining, e.g. set.attr({ stroke: '#fff'}).style('dragging').toF
         	set: this.paper.set()
         };
 
-        c.set.push(c.center        = this.paper.circle(1, 1, 3).attr({cx: o.center.x, cy: o.center.y}));
-
         c.set.push(c.top           = this.paper.circle(1, 1, 3).attr({cx: o.top.x, cy: o.top.y}));
         c.set.push(c.left          = this.paper.circle(1, 1, 3).attr({cx: o.left.x, cy: o.left.y}));
         c.set.push(c.right         = this.paper.circle(1, 1, 3).attr({cx: o.right.x, cy: o.right.y}));
         c.set.push(c.bottom        = this.paper.circle(1, 1, 3).attr({cx: o.bottom.x, cy: o.bottom.y}));
-
+        
 
         if (this.is('circle') == false)
         {
@@ -506,12 +505,10 @@ return this; // chaining, e.g. set.attr({ stroke: '#fff'}).style('dragging').toF
 
 
         // cyclic references
-        c.center.set =        c.set;
-
-        c.top.set =
-        c.left.set =
-        c.right.set =
-        c.bottom.set =        c.set;
+        // c.top.set =
+        // c.left.set =
+        // c.right.set =
+        // c.bottom.set =        c.set;
 
         if (this.is('circle') == false)
         {
@@ -545,17 +542,15 @@ return this; // chaining, e.g. set.attr({ stroke: '#fff'}).style('dragging').toF
 }
 else
 {
+    console.log("docs");
 	var c = this.dots;
 
 	aniOptions = this.aniOptions ? this.aniOptions : null;
 
-
-	c.center      .attr({cx: o.center.x,          cy: o.center.y});
-
-	c.top         .attr({cx: o.top.x,             cy: o.top.y});
-	c.left        .attr({cx: o.left.x,            cy: o.left.y});
-	c.right       .attr({cx: o.right.x,           cy: o.right.y});
-	c.bottom      .attr({cx: o.bottom.x,          cy: o.bottom.y});
+	// c.top         .attr({cx: o.top.x,             cy: o.top.y});
+	// c.left        .attr({cx: o.left.x,            cy: o.left.y});
+	// c.right       .attr({cx: o.right.x,           cy: o.right.y});
+	// c.bottom      .attr({cx: o.bottom.x,          cy: o.bottom.y});
 
 	if (this.is('circle') == false)
 	{
@@ -579,17 +574,116 @@ else
  * @license     WTFPL Version 2 ( http://en.wikipedia.org/wiki/WTFPL )
  *
  */
- Raphael.st.drawDots = function (aniOptions)
- {
- 	for (var i = 0, j = this.items.length; i < j; i++)
- 	{
- 		this.items[i].drawDots(aniOptions);
- 	}
+//  Raphael.st.drawDots = function (aniOptions)
+//  {
+//     console.log(aniOptions);
+//     console.log(this.items);
+//  	for (var i = 0, j = this.items.length; i < j; i++)
+//  	{
+//  		this.items[i].drawDots(aniOptions);
+//         console.log(i);
+//         console.log(this.items[i]);
+//  	}
 
-    return this; // chaining
-}
+//     return this; // chaining
+// }
+
+/**
+ * Bounding Containers in RaphaelJS: DEMO
+ *
+ * @blog        http://terryyoung.blogspot.com/2011/08/bounding-containers-in-raphaeljs.html
+ * @copyright   Terry Young <terryyounghk [at] gmail.com>
+ * @license     WTFPL Version 2 ( http://en.wikipedia.org/wiki/WTFPL )
+ */
+
+///////////////////////////////////////////////////////////////////////////////
+// The demo
+// $(document).ready(function () {
+//     // Prepare the paper and elements
+//     var paper   = Raphael('SVG_GETCBOX_1', 640, 200),
+//     set     = paper.set(),
+//     rect    = paper.rect(paper.width / 2, -100, 32, 32, 5),
+//         image   = paper.image('about:blank', paper.width / 2, -100, 32, 32), // real src is defined in styles
+//         label   = paper.text(paper.width / 2, -100, 'My Computer'),
+//         margin  = 20,
+//         loop    = false;
+
+//         set.push(rect, image, label).style();
 
 
+//     // This will be the element appearing as a container of the above three objects
+//     var container = paper.rect(paper.width / 2, -150, 1, 1, 5)
+//     .attr({opacity: 0.7, fill: '#bed9ae', stroke: '#476442', 'stroke-width': 4})
+//     .drawDots()
+//     .toBack()
+//     .mouseover(this.toBack)
+//     .mouseout(this.toBack);
+
+//     // function to resize the bounding container
+//     var resizeContainer = function () {
+//         container.dots.set.hide(); // hide dots while resizing
+
+//         // This is the magic function.
+//         // Pass in as many RaphaelJS elements as an array,
+//         // and you'll get all the useful coordinates and dimensions of the resulting container
+
+//         var o = paper.vis.getCBox(set.items);
+
+//         // reposition and resize
+//         container.stop().animate({x: o.x, y: o.y, width: o.width, height: o.height, opacity: 0.7}, 800, 'backOut', function ()
+//         {
+//             this.drawDots();
+//             this.dots.set.show();
+//             if (loop) setTimeout(demoGetCBox, 500);
+//         });
+//     };
+
+//     // function randomize positions of small elements, then resize the bounding container
+//     var demoGetCBox = function () {
+
+//         container.dots.set.hide();
+//         container.stop().animate({opacity: 0.2}, 1000, 'backOut', function ()
+//         {
+//             container.dots.set.hide();
+
+//             var pos = paper.vis.getRandomPos(rect, margin);
+//             rect.stop().animate({x: pos.x, y: pos.y}, 800, 'backOut');
+
+//             var pos = paper.vis.getRandomPos(image, margin);
+//             image.stop().animate({x: pos.x, y: pos.y}, 1200, 'backOut');
+
+//             var pos = paper.vis.getRandomPos(label, margin);
+//             label.stop().animate({x: pos.x, y: pos.y}, 1500, 'backOut', function ()
+//             {
+//                 resizeContainer();
+//             });
+//         });
+//     };
+
+//     // to resize the bounding container while dragging the small elements
+    
+//     set.draggable().drag(
+//         function ()
+//         {
+//             loop = false;
+//             resizeContainer();
+//         },
+//         function () {
+//             // not cool
+//         },
+//         function ()
+//         {
+//             loop = false;
+//             resizeContainer();
+//         });
+
+//     // or you can click those buttons to randomly position elements and resize the bounding container
+    
+//     $('#SVG_GETCBOX_MANUAL').click(function () { loop = false; demoGetCBox(); });
+//     $('#SVG_GETCBOX_AUTO').click(function () { loop = true; demoGetCBox(); });
+
+//     demoGetCBox(); // run once the first time
+// });
 
 
 
