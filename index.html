@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rapheal-JS</title>
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<script type="text/javascript" src="./js/base/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="./js/base/raphael-1.5.2.min.js"></script>
+    <script type="text/javascript" src="./js/component/raphael.functions.js"></script>
+</head>
+<body>
+	<p>
+		<button id="SVG_GETCBOX_MANUAL">Randomize Manually</button>
+		<button id="SVG_GETCBOX_AUTO">Randomize Continuously</button>
+	</p>
+
+	<div id="SVG_GETCBOX_1" class="SVG_CONNECTORS_HOLDER"></div>
+
+	<p>This demonstrates my getCBox() function, which calculates the bounding container coordinates of any given number of objects.</p>
+	<p>The green container is the result.</p>
+	<p>Drag any of the small elements (i.e. Image, Rect, Text) and the container resizes.</p>
+	<p>Or click one of the two buttons to randomize positions automatically.</p>
+	<p>Hover the green container to view the refreshed connector dot positions.</p>
+
+	<br>
+	<div id="container">
+		<div id="header" style="margin-bottom: 0;">
+			<h1 id="title">Editor</h1>
+			<div id="footer"></div>
+		</div>
+	</div>
+
+    <script type="text/javascript" src="./js/main.js"></script>
+</body>
+</html>

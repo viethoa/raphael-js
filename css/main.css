@@ -1,0 +1,46 @@
+/***********************************************************************
+Common styles
+***********************************************************************/
+html, body {
+background-color:#222222;
+color:white;
+}
+
+html, body, button
+{
+font-family: Consolas;
+font-size: 10pt;
+line-height:            14pt;
+}
+
+br.clear
+{
+clear:                  both;
+}
+
+/***********************************************************************
+Common styles
+***********************************************************************/
+
+.SVG_CONNECTORS_HOLDER {
+
+-moz-border-radius:       10px;
+-webkit-border-radius:    10px;
+border-radius:            10px;
+border:                   solid 3px #818ca0;
+background-color:         #dbdee3;
+width:                    640px;
+height:                   200px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
